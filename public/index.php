@@ -2,9 +2,8 @@
 
 
 namespace App;
-
+session_start();
 use App\Lib\Template;
-
 define('DS',DIRECTORY_SEPARATOR);
 
 require_once "..".DS."app".DS.'config'.DS.'appconfig.php';

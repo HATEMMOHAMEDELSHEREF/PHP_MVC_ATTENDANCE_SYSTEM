@@ -34,10 +34,21 @@
                     <a href="#" ><i class="fa fa-male" id="instructor"></i>Instructors </a>
                     <ul class="submenu">
                         <li><a href="/instructor/default">Instructors</a></li>
+                        <li><a href="/instructor/add">Add New</a></li>
                         <li><a href="#">Reports</a></li>
                     </ul>
                 </li>
-                <li class="active"><a href="/tracks/default"><i class="fa fa-road" id="track"></i>Tracks</a></li>
+
+                <li>
+                    <a href="/tracks/default"><i class="fa fa-road" id="track"></i>Tracks</a>
+                    <ul class="submenu">
+                        <li><a href="/tracks/default">Tracks</a></li>
+                        <li><a href="/tracks/add">Add New</a></li>
+                        <li><a href="#">Reports</a></li>
+                    </ul>
+                </li>
+
+
                 <li class="active"><a href="/money/default"><i class="fa fa-money" id="paids"></i>Money</a></li>
                 <li class="active"><a href="#"><i class="fa fa-qrcode" id="barcode"></i>QR Code</a>
                     <ul class="submenu">
@@ -47,6 +58,7 @@
                 </li>
                 <li class="active"><a href="time.php"><i class="fa fa-calendar" id="timetable"></i>Time Table</a></li>
                 <li class="active"><a href="time.php"><i class="fa fa-envelope" id="mail"></i>Mail</a></li>
+                <li class="active"><a href="/places/default"><i class="fa fa-building"></i>Places</a></li>
 
             </ul>
 

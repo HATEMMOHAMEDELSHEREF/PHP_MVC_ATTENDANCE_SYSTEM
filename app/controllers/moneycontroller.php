@@ -4,7 +4,7 @@
 namespace App\Controllers;
 
 
-class MoneyController extends Controller
+class MoneyController extends AbstractController
 {
 
 }

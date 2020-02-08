@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: 05 فبراير 2020 الساعة 02:51
+-- Generation Time: 08 فبراير 2020 الساعة 01:57
 -- إصدار الخادم: 10.1.32-MariaDB
 -- PHP Version: 7.2.5
 
@@ -47,9 +47,9 @@ CREATE TABLE `att_instructors` (
   `instructor_name` varchar(50) NOT NULL,
   `instructor_email` varchar(50) NOT NULL,
   `instructor_phone` varchar(14) NOT NULL,
-  `instructor_avatar` varchar(50) NOT NULL,
+  `instructor_avatar` varchar(255) DEFAULT NULL,
   `instructor_password` varchar(50) NOT NULL,
-  `instructor_role` varchar(5) NOT NULL DEFAULT 'low'
+  `instructor_role` varchar(10) NOT NULL DEFAULT 'general'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -57,7 +57,32 @@ CREATE TABLE `att_instructors` (
 --
 
 INSERT INTO `att_instructors` (`instructor_id`, `instructor_name`, `instructor_email`, `instructor_phone`, `instructor_avatar`, `instructor_password`, `instructor_role`) VALUES
-(1, 'hatem mohamed elsheref', 'admin@admin.com', '01090703457', '', '123', 'high');
+(18, 'admin', 'admin@admin.com', '01090703457', 'UPLOADED/Instructors/mufix_instructor__5e3d8fe82157a158109284083.png', '123', 'general'),
+(40, 'ahmed', 'ahmed@mufix.com', '1233321', 'UPLOADED/Instructors/mufix_instructor__5e3d9cb820681158109612016.jpg', '123', 'general'),
+(41, 'xyz', 'xyz@xyz.com', '69857', 'images/default_user.png', '123', 'general');
+
+-- --------------------------------------------------------
+
+--
+-- بنية الجدول `att_places`
+--
+
+CREATE TABLE `att_places` (
+  `place_id` int(11) NOT NULL,
+  `place_name` varchar(25) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- إرجاع أو استيراد بيانات الجدول `att_places`
+--
+
+INSERT INTO `att_places` (`place_id`, `place_name`) VALUES
+(1, 'Hall 1'),
+(2, 'Hall 2'),
+(3, 'Hall 3'),
+(4, 'Hall 4'),
+(5, 'Hall 5'),
+(7, 'Lab 305');
 
 -- --------------------------------------------------------
 
@@ -126,8 +151,18 @@ CREATE TABLE `att_tracks` (
   `track_name` varchar(25) NOT NULL,
   `track_instructor_id` int(50) NOT NULL,
   `track_cost` decimal(5,2) NOT NULL,
-  `track_place` varchar(25) NOT NULL
+  `track_place_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- إرجاع أو استيراد بيانات الجدول `att_tracks`
+--
+
+INSERT INTO `att_tracks` (`track_id`, `track_name`, `track_instructor_id`, `track_cost`, `track_place_id`) VALUES
+(35, 'FrontEnd', 18, '120.00', 2),
+(36, 'fronyend', 18, '32.00', 2),
+(37, 'backend', 18, '120.00', 4),
+(38, 'c++', 40, '50.00', 1);
 
 -- --------------------------------------------------------
 
@@ -136,10 +171,21 @@ CREATE TABLE `att_tracks` (
 --
 
 CREATE TABLE `att_track_days` (
-  `track_day_id` int(11) NOT NULL,
-  `track_day_track_id` int(11) NOT NULL,
-  `track_day_day_id` int(11) NOT NULL
+  `id` int(11) NOT NULL,
+  `track_id` int(11) NOT NULL,
+  `day_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- إرجاع أو استيراد بيانات الجدول `att_track_days`
+--
+
+INSERT INTO `att_track_days` (`id`, `track_id`, `day_id`) VALUES
+(33, 37, 1),
+(34, 37, 4),
+(35, 38, 1),
+(36, 38, 4),
+(37, 38, 7);
 
 -- --------------------------------------------------------
 
@@ -151,6 +197,19 @@ CREATE TABLE `att_week_days` (
   `day_id` int(11) NOT NULL,
   `day_name` varchar(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- إرجاع أو استيراد بيانات الجدول `att_week_days`
+--
+
+INSERT INTO `att_week_days` (`day_id`, `day_name`) VALUES
+(1, 'Saterday'),
+(2, 'Sunday'),
+(3, 'Monday'),
+(4, 'Tuesday'),
+(5, 'Wednesday'),
+(6, 'Thursday'),
+(7, 'Friday');
 
 --
 -- Indexes for dumped tables
@@ -168,8 +227,15 @@ ALTER TABLE `att_absense`
 ALTER TABLE `att_instructors`
   ADD PRIMARY KEY (`instructor_id`),
   ADD UNIQUE KEY `instructor_phone` (`instructor_phone`),
-  ADD UNIQUE KEY `instructor_avatar` (`instructor_avatar`),
   ADD UNIQUE KEY `instructor_email` (`instructor_email`);
+
+--
+-- Indexes for table `att_places`
+--
+ALTER TABLE `att_places`
+  ADD PRIMARY KEY (`place_id`),
+  ADD UNIQUE KEY `place_name` (`place_name`),
+  ADD UNIQUE KEY `place_name_2` (`place_name`);
 
 --
 -- Indexes for table `att_session`
@@ -209,7 +275,7 @@ ALTER TABLE `att_tracks`
 -- Indexes for table `att_track_days`
 --
 ALTER TABLE `att_track_days`
-  ADD PRIMARY KEY (`track_day_id`);
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `att_week_days`
@@ -231,7 +297,13 @@ ALTER TABLE `att_absense`
 -- AUTO_INCREMENT for table `att_instructors`
 --
 ALTER TABLE `att_instructors`
-  MODIFY `instructor_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `instructor_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=42;
+
+--
+-- AUTO_INCREMENT for table `att_places`
+--
+ALTER TABLE `att_places`
+  MODIFY `place_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `att_session`
@@ -261,19 +333,19 @@ ALTER TABLE `att_student_tracks`
 -- AUTO_INCREMENT for table `att_tracks`
 --
 ALTER TABLE `att_tracks`
-  MODIFY `track_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `track_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=39;
 
 --
 -- AUTO_INCREMENT for table `att_track_days`
 --
 ALTER TABLE `att_track_days`
-  MODIFY `track_day_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=38;
 
 --
 -- AUTO_INCREMENT for table `att_week_days`
 --
 ALTER TABLE `att_week_days`
-  MODIFY `day_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `day_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

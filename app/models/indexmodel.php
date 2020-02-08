@@ -4,9 +4,7 @@
 namespace App\Models;
 
 
-class IndexModel extends Model
+class IndexModel extends AbstractModel
 {
-public function __construct(){
-    echo '<br> I amIndex Model <br>';
-}
+
 }

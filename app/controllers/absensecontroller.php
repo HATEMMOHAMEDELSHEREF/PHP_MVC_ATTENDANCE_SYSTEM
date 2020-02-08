@@ -4,7 +4,7 @@
 namespace App\Controllers;
 
 
-class AbsenseController extends Controller
+class AbsenseController extends AbstractController
 {
     public function startabsenseAction(){
         $this->view();

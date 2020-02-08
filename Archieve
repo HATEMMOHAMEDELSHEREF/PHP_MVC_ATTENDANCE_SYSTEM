@@ -1,0 +1,106 @@
+ public function UploadAvatar($Avatar){
+        if ($Avatar['size']>0){
+            $Allowed_Extension=['png','jpg','jpeg','gif'];
+            $name=$Avatar['name'];
+            $Image_Parts=explode('.',$name);
+            $extension=end($Image_Parts);
+            $extension=strtolower($extension);
+            if (($Avatar['size']/1024)/1024>3){
+               return array(
+                   'Msg'        =>'Failed To Upload Image Image Size Exceeded The Limit',
+                   'Type'       =>'danger',
+                   'Status'     =>false
+               );
+            }
+            if (in_array($extension,$Allowed_Extension)){
+                $newName=uniqid('instructor_').time().rand(0,100).'.'.$extension;
+                $Destination='UPLOADED/'.$newName;
+                $Source=$Avatar['tmp_name'];
+                $result=move_uploaded_file($Source,$Destination);
+                if ($result===true){
+                    $this->instructor_avatar=$Destination;
+                    return array(
+                        'Msg'        =>'Image Uploaded Successfully',
+                        'Type'       =>'success',
+                        'Status'     =>true
+                    );
+                }else{
+                    return array(
+                        'Msg'        =>'Failed To Upload Image Invalid Image',
+                        'Type'       =>'danger',
+                        'Status'     =>false
+                    );
+                }
+            }else{
+                $this->instructor_avatar='/images/default_user.png';
+                return array(
+                    'Msg'        =>'App Default Image Uploaded Successfully',
+                    'Type'       =>'success',
+                    'Status'     =>true
+                );
+            }
+        }else{
+            return array(
+                'Msg'        =>'Failed To Upload Image Invalid Image',
+                'Type'       =>'danger',
+                'Status'     =>false
+            );
+        }
+    }
+
+    /* public function editAction()
+        {
+            if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+                $MODEL = new InstructorModel();
+                $MODEL->instructor_id = $_POST['instructor_id'];
+                $MODEL->instructor_avatar = $_POST['instructor_Avatar'];
+                if (isset($_FILES['instructor_avatar'])) {
+                    Uploader::$FILE = $_FILES['instructor_avatar'];
+                    var_dump(Uploader::$FILE);
+                    if (Uploader::CheckUserUploaded() === true) {
+                        if ((Uploader::CheckSize())===true) {
+                            $Result = Uploader::Upload();
+                            if ($Result['Status'] === true) {
+                                $_SESSION['edit_instructor'] = $Result;
+                                $_SESSION['uploaded_image'] = $MODEL->instructor_avatar;
+                                $MODEL->instructor_avatar = Uploader::$Destination;
+                            } else {
+                                $_SESSION['edit_instructor'] = $Result;
+                                //Helper::Redirect('/instructor/edit/'.$MODEL->instructor_id);
+                            }
+                        } else {
+                            $Result = array(
+                                'Msg' => 'Failed To Upload As Image Size Exceeded The Limit',
+                                'Type' => 'danger',
+                                'Status' => false
+                            );
+                            $_SESSION['edit_instructor'] = $Result;
+                            //Helper::Redirect('/instructor/edit/'.$MODEL->instructor_id);
+                        }
+                    }else{
+                        echo 'failed';
+                    }
+                }
+
+            }else {
+                $MODEL = new InstructorModel();
+                if (isset($this->PARAMS[0])) {
+                    $PK = Helper::Filter_Int($this->PARAMS[0]);
+                    if ($PK !== false) {
+                        $result = $MODEL->getByPk($PK);
+                        if ($result['Status'] === true) {
+                            $this->_DATA['instructor'] = $result['Data'];
+                        } else {
+                            Helper::Redirect('/instructor/default');
+                        }
+                    }else{
+                        Helper::Redirect('/instructor/default');
+                    }
+                }else{
+                    Helper::Redirect('/instructor/default');
+                }
+                $this->view();
+            }
+        }*/
+
+        select track_id,track_name,place_name,instructor_name from att_tracks inner join att_places ON att_tracks.track_place_id=att_places.place_id inner join att_instructors on att_tracks.track_instructor_id=att_instructors.instructor_id

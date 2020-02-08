@@ -26,11 +26,17 @@ class Brain
             $this->_action = 'default';
             $this->_template=$template;
             $this->_parseUrl($url);
-        }else{
+            if ($this->_controller==='authentication'){
+                Helper::Redirect('/index/default');
+            }
+        }
+        /* For Test
+        else{
             $this->_template=$template;
             $this->_parseUrl($url);
         }
-       /* else {
+        */
+        else {
             $this->_controller = 'authentication';
             $this->_action = 'login';
             $this->_parseUrl($url);
@@ -45,7 +51,6 @@ class Brain
 
             $this->_template=$template;
         }
-       */
 
     }
 

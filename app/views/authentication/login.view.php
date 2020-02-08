@@ -22,11 +22,11 @@
             <div class="account-wall">
                 <div id="my-tab-content" class="tab-content">
                     <div class="tab-pane active" id="login">
-                        <img class="profile-img" src="/images/photo.png" alt="">
-                        <form class="form-signin" action="" method="">
-                            <input type="email" class="form-control" placeholder="Emaill Address ..." required autofocus>
+                        <img class="profile-img" src="/images/default_user.png" alt="">
+                        <form class="form-signin" action="/authentication/login" method="post">
+                            <input type="email" name="user_email" class="form-control" placeholder="Emaill Address ..." required autofocus>
 
-                            <input type="password" class="form-control" placeholder="Password" required>
+                            <input type="password" name="user_password" class="form-control" placeholder="Password" required>
                             <input type="submit" class="btn btn-lg btn-primary btn-block" value="Login In" />
                         </form>
 

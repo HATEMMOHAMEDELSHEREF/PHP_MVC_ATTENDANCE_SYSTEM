@@ -127,3 +127,37 @@ $(function () {
 
     });
 
+    
+    $(document).ready(function () {
+        $('#add_instructor').click(function () {
+            if ($('#instructor_name').val().length==0){
+                $('.hideme').addClass('showme');
+                return false;
+            }else if ($('#instructor_email').val().length==0){
+                $('.hideme').addClass('showme');
+                return false;
+            }else if ($('#instructor_phone').val().length==0){
+                $('.hideme').addClass('showme');
+                return false;
+            }else if ($('#instructor_password').val().length==0){
+                $('.hideme').addClass('showme');
+                return false;
+            }
+
+        });
+
+    });
+
+
+$(document).ready(function () {
+    $('#MESSAGE').css('visibility','visible');
+    $('#MESSAGE').fadeIn(function () {
+        $('#MESSAGE').animate({
+            width:'90%',
+        },1000);
+    });
+    setTimeout(function () {
+        $('#MESSAGE').fadeOut(1000);
+
+    },5000);
+});

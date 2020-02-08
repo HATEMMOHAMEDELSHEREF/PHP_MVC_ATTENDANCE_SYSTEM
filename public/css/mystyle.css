@@ -374,8 +374,13 @@ main content
 }
 .track-panel .badge-primary,.badge-danger,.badge-success{
     font-size: 15px;
-    padding: 5px;
+    /*padding: 5px;*/
     border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    line-height: 40px;
+    display: inline-block;
+    text-align: center;
 }
 select.form-control[multiple], select.form-control[size]{
     height: 178px;
@@ -542,4 +547,39 @@ background-color: #ffa7a74d!important;
 }
 .scan-absense-btn{
     margin-bottom:10px;
+}
+
+.mr-bottom{
+margin-bottom: 10px;
+}
+.hideme{
+    display: none;
+}
+.showme{
+    display: inline-block;
+
+}
+#MESSAGE{
+    width: 50%;
+    margin:10px auto;
+}
+
+.success-operation{
+    background-color: #1bcc46;
+    color: #FFF;
+    font-family: monospace;
+    font-weight: bold;
+    font-size: 1.5rem;
+    text-transform: capitalize;
+
+}
+
+.danger-operation{
+    background-color: #f40063;
+    color: #FFF;
+    font-family: monospace;
+    font-weight: bold;
+    font-size: 1.5rem;
+    text-transform: capitalize;
+
 }

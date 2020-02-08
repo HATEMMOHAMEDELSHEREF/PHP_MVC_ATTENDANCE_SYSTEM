@@ -4,7 +4,7 @@
 namespace App\Controllers;
 
 
-class NotFoundController extends Controller
+class NotFoundController extends AbstractController
 {
 
 }

@@ -8,6 +8,7 @@ class Template
 {
     private $resources;
     private $view;
+    private $Data;
 
     public  function __construct($resources)
     {
@@ -18,6 +19,10 @@ class Template
         $this->view=$view;
     }
 
+    public  function setData($data)
+    {
+        $this->Data=$data;
+    }
 
     private function RenderCssHeaderResources($resources){
         foreach ($resources as $CSSKEY =>$CSSVALUE){

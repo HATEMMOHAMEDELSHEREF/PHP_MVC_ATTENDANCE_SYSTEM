@@ -1,46 +1,33 @@
+<?php
+
+extract($this->Data);
+
+?>
+
 <div class="container">
     <div class="row">
         <div class="col-xs-12">
+            <?php
+            if (isset($_SESSION['delete_instructor'])){
+                $_SESSION['instructor']=$_SESSION['delete_instructor'];
+            }
+            if (isset($_SESSION['instructor'])){
+                echo '<div class="alert alert-'.$_SESSION['instructor']['Type'].' '.$_SESSION['instructor']['Type'].'-operation" style="visibility: hidden" id="MESSAGE">
+                '.$_SESSION['instructor']['Msg'].'
+                </div>';
+                unset($_SESSION['delete_instructor']);
+                unset($_SESSION['instructor']);
+            }
+            ?>
+        </div>
+        <div class="col-xs-12 mr-bottom">
             <div class="track-panel">
-                <h3>Instructors <span class="badge-primary">20</span></h3>
+                <h3 class="pull-left">Instructors <span class="badge-primary"><?= count($instructor)?></span></h3>
+                <a class="btn btn-primary pull-right" href="/instructor/add"><i class="fa fa-plus"></i> Add New</a>
             </div>
+            <div class="clearfix mr-bottom"></div>
         </div>
         <div class="col-xs-12 trackss">
-            <div class="col-xs-12 add-track">
-                <form autocomplete="off" novalidate>
-                    <div class="col-xs-6 tracks-left-side">
-                        <div class="form-group">
-                            <label><span class="text-dark">Instructor Name</span></label>
-                            <input type="text" class="form-control"  placeholder="Instructor Name">
-                        </div>
-                        <div class="form-group">
-                            <label><span class="text-dark">Instructor Email</span></label>
-                            <input type="text" class="form-control"  placeholder="Instructor Email">
-                        </div>
-                        <div class="form-group">
-                            <label><span class="text-dark">Instructor Phone</span></label>
-                            <input type="text" class="form-control"  placeholder="Instructor Phone">
-                        </div>
-
-                    </div>
-                    <div class="col-xs-6 tracks-right-side">
-                        <div class="form-group">
-                            <label><span class="text-dark">Instructor Avatar</span></label>
-                            <input type="file" class="form-control"  placeholder="Instructor Avatar">
-                        </div>
-                        <div class="form-group">
-                            <label><span class="text-dark">Instructor Password</span></label>
-                            <input type="password" class="form-control"  placeholder="Instructor Password">
-                        </div>
-                        <div class="form-group">
-                            <label><span class="text-dark">Save</span></label>
-                            <button type="submit" class="btn btn-primary form-control">Save</button>
-                        </div>
-                    </div>
-
-
-                </form>
-            </div>
             <div class="col-xs-12 tracks">
                 <table class="table table-striped table-responsive ">
                     <thead>
@@ -53,36 +40,25 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr>
-                        <td>1</td>
-                        <td>Ahmed Mohamed</td>
-                        <td>ahmedmohamed@gmail.com</td>
-                        <td>+2010134688</td>
-                        <td>
-                            <a href="#"><i class="fa fa-edit"></i></a>
-                            <a href="#"><i class="fa fa-trash"></i></a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>2</td>
-                        <td>Ahmed Mohamed</td>
-                        <td>ahmedmohamed@gmail.com</td>
-                        <td>+2010134688</td>
-                        <td>
-                            <a href="#"><i class="fa fa-edit"></i></a>
-                            <a href="#"><i class="fa fa-trash"></i></a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>3</td>
-                        <td>Ahmed Mohamed</td>
-                        <td>ahmedmohamed@gmail.com</td>
-                        <td>+2010134688</td>
-                        <td>
-                            <a href="/instructor/edit"><i class="fa fa-edit"></i></a>
-                            <a href="#"><i class="fa fa-trash"></i></a>
-                        </td>
-                    </tr>
+
+                    <?php
+                    foreach ($instructor as $element):?>
+                        <tr>
+                            <td><?=$element->instructor_id;?></td>
+                            <td><?=$element->instructor_name;?></td>
+                            <td><?=$element->instructor_email;?></td>
+                            <td><?=$element->instructor_phone;?></td>
+                            <td>
+                                <a href="/instructor/edit/<?=$element->instructor_id;?>"><i class="fa fa-edit"></i></a>
+                                <a href="/instructor/delete/<?=$element->instructor_id;?>" onclick="return (confirm('Do You Sure To Remove This Instructor'))?true:false;">
+                                    <i class="fa fa-trash"></i>
+                                </a>
+                            </td>
+                        </tr>
+                    <?php
+                    endforeach;
+                    ?>
+
                     </tbody>
                 </table>
             </div>

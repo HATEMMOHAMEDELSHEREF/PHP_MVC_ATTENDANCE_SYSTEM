@@ -3,7 +3,7 @@
 
 namespace App\Controllers;
 
-class IndexController extends Controller
+class IndexController extends AbstractController
 {
 
     public function editAction(){

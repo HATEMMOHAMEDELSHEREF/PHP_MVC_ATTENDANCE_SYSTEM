@@ -29,7 +29,7 @@
                         </form>
 
                         <div id="tabs" data-tabs="tabs">
-                            <p class="text-center"><a href="login.php">Login</a></p>
+                            <p class="text-center"><a href="/authentication/login">Login</a></p>
                         </div>
                     </div>
                 </div>

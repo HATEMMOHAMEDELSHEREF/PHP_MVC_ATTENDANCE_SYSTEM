@@ -4,7 +4,7 @@
 namespace App\Controllers;
 
 
-class StudentController extends Controller
+class StudentController extends AbstractController
 {
 
     public function addAction(){

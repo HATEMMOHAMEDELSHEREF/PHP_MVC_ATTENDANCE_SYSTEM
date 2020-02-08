@@ -4,7 +4,7 @@
 namespace App\Controllers;
 
 
-class SessionsController extends Controller
+class SessionsController extends AbstractController
 {
 
     public function addAction(){
