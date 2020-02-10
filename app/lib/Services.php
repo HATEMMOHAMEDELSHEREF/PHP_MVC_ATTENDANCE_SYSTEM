@@ -27,19 +27,6 @@ class Services
         }
     }
 
-    public static function Merge($table,$schema,$data){
-        $Handler=Database::Connection();
-        $SQL="INSERT INTO ".$table." SET ";
-        foreach($schema as $columName =>$type){
-            $SQL.=$columName."=:".$columName.",";
-        }
-        $SQL=trim($SQL,',');
-        $PARAMS=array();
-        foreach($data as $columName =>$value){
-            $x=":$columName";
-
-        }
 
 
-    }
 }

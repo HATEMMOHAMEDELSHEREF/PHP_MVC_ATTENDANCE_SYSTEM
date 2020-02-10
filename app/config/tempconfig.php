@@ -13,9 +13,9 @@ return array(
         ),
         'JS'=>array(
             'JQUERY'                 =>JS.'jquery.min.js',
-            'QRGENERATOR_FIRST'      =>JS.'qrious.js',
-            'QRREADER_FIRST'         =>JS.'jsQR.js',
-            'QRREADER_SECOND'        =>JS.'dw-qrscan.js'
+//            'QRGENERATOR_FIRST'      =>JS.'qrious.js',
+//            'QRREADER_FIRST'         =>JS.'jsQR.js',
+//            'QRREADER_SECOND'        =>JS.'dw-qrscan.js'
         )
     ),
     'TEMPLATE_RESOURCES'=>array(

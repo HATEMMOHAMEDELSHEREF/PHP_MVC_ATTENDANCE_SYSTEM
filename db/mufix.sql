@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: 08 فبراير 2020 الساعة 01:57
+-- Generation Time: 09 فبراير 2020 الساعة 22:58
 -- إصدار الخادم: 10.1.32-MariaDB
 -- PHP Version: 7.2.5
 
@@ -109,10 +109,17 @@ CREATE TABLE `att_students` (
   `student_name` varchar(50) NOT NULL,
   `student_email` varchar(50) NOT NULL,
   `student_phone` varchar(14) NOT NULL,
-  `student_lavel` int(11) NOT NULL,
+  `student_level` varchar(11) NOT NULL,
   `student_register_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `student_qr` varchar(50) NOT NULL
+  `student_qr` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- إرجاع أو استيراد بيانات الجدول `att_students`
+--
+
+INSERT INTO `att_students` (`student_id`, `student_name`, `student_email`, `student_phone`, `student_level`, `student_register_date`, `student_qr`) VALUES
+(92, 'Hatem Mohamed Ibrahim Elsheref', 'hatemelsheref99@gmail.com', '01090703457', '3', '2020-02-09 20:31:23', 'QR/2020-02-095fe78c3126.png');
 
 -- --------------------------------------------------------
 
@@ -131,14 +138,28 @@ CREATE TABLE `att_student_paids` (
 -- --------------------------------------------------------
 
 --
--- بنية الجدول `att_student_tracks`
+-- بنية الجدول `att_student_track`
 --
 
-CREATE TABLE `att_student_tracks` (
-  `std_track_id` int(11) NOT NULL,
-  `std_track_student_id` int(11) NOT NULL,
-  `std_track_track_id` int(11) NOT NULL
+CREATE TABLE `att_student_track` (
+  `id` int(11) NOT NULL,
+  `student_id` int(11) NOT NULL,
+  `track_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- إرجاع أو استيراد بيانات الجدول `att_student_track`
+--
+
+INSERT INTO `att_student_track` (`id`, `student_id`, `track_id`) VALUES
+(160, 92, 1),
+(161, 92, 2),
+(162, 92, 3),
+(163, 92, 4),
+(164, 92, 5),
+(165, 92, 6),
+(166, 92, 7),
+(167, 92, 8);
 
 -- --------------------------------------------------------
 
@@ -159,10 +180,14 @@ CREATE TABLE `att_tracks` (
 --
 
 INSERT INTO `att_tracks` (`track_id`, `track_name`, `track_instructor_id`, `track_cost`, `track_place_id`) VALUES
-(35, 'FrontEnd', 18, '120.00', 2),
-(36, 'fronyend', 18, '32.00', 2),
-(37, 'backend', 18, '120.00', 4),
-(38, 'c++', 40, '50.00', 1);
+(1, 'c++', 18, '120.00', 1),
+(2, 'JavaFx', 18, '120.00', 2),
+(3, 'FrontEnd', 18, '120.00', 3),
+(4, 'BackEnd', 18, '120.00', 4),
+(5, 'Graphic Design', 18, '120.00', 4),
+(6, 'Problem Solving', 18, '120.00', 5),
+(7, 'Java', 40, '150.00', 2),
+(8, 'test', 18, '120.00', 3);
 
 -- --------------------------------------------------------
 
@@ -181,11 +206,23 @@ CREATE TABLE `att_track_days` (
 --
 
 INSERT INTO `att_track_days` (`id`, `track_id`, `day_id`) VALUES
-(33, 37, 1),
-(34, 37, 4),
-(35, 38, 1),
-(36, 38, 4),
-(37, 38, 7);
+(1, 1, 1),
+(2, 1, 4),
+(3, 2, 2),
+(4, 2, 5),
+(5, 3, 3),
+(6, 3, 6),
+(7, 4, 1),
+(8, 4, 5),
+(9, 5, 3),
+(10, 5, 4),
+(11, 6, 1),
+(12, 6, 3),
+(13, 6, 5),
+(14, 7, 2),
+(15, 7, 5),
+(16, 8, 2),
+(17, 8, 5);
 
 -- --------------------------------------------------------
 
@@ -249,8 +286,7 @@ ALTER TABLE `att_session`
 ALTER TABLE `att_students`
   ADD PRIMARY KEY (`student_id`),
   ADD UNIQUE KEY `student_email` (`student_email`),
-  ADD UNIQUE KEY `student_phone` (`student_phone`),
-  ADD UNIQUE KEY `student_qr` (`student_qr`);
+  ADD UNIQUE KEY `student_phone` (`student_phone`);
 
 --
 -- Indexes for table `att_student_paids`
@@ -259,10 +295,10 @@ ALTER TABLE `att_student_paids`
   ADD PRIMARY KEY (`paid_id`);
 
 --
--- Indexes for table `att_student_tracks`
+-- Indexes for table `att_student_track`
 --
-ALTER TABLE `att_student_tracks`
-  ADD PRIMARY KEY (`std_track_id`);
+ALTER TABLE `att_student_track`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `att_tracks`
@@ -303,7 +339,7 @@ ALTER TABLE `att_instructors`
 -- AUTO_INCREMENT for table `att_places`
 --
 ALTER TABLE `att_places`
-  MODIFY `place_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `place_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `att_session`
@@ -315,7 +351,7 @@ ALTER TABLE `att_session`
 -- AUTO_INCREMENT for table `att_students`
 --
 ALTER TABLE `att_students`
-  MODIFY `student_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `student_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=93;
 
 --
 -- AUTO_INCREMENT for table `att_student_paids`
@@ -324,22 +360,22 @@ ALTER TABLE `att_student_paids`
   MODIFY `paid_id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `att_student_tracks`
+-- AUTO_INCREMENT for table `att_student_track`
 --
-ALTER TABLE `att_student_tracks`
-  MODIFY `std_track_id` int(11) NOT NULL AUTO_INCREMENT;
+ALTER TABLE `att_student_track`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=168;
 
 --
 -- AUTO_INCREMENT for table `att_tracks`
 --
 ALTER TABLE `att_tracks`
-  MODIFY `track_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=39;
+  MODIFY `track_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `att_track_days`
 --
 ALTER TABLE `att_track_days`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=38;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- AUTO_INCREMENT for table `att_week_days`

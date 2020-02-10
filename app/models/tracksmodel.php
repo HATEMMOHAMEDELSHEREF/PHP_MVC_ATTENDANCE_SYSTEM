@@ -24,17 +24,19 @@ class TracksModel extends AbstractModel
         'track_cost'            =>self::DATA_TYPE_FLOAT,
         'track_place_id'        =>self::DATA_TYPE_INT
     );
-    public function getAll()
+    public function getAll($condition="")
     {
-        $SQL="SELECT track_id,track_name,track_cost,place_name,instructor_name FROM att_tracks INNER JOIN att_places ";
+        $SQL="SELECT track_id,track_name,track_cost,place_name,track_place_id,instructor_name,track_instructor_id FROM att_tracks INNER JOIN att_places ";
         $SQL.=" ON att_tracks.track_place_id=att_places.place_id INNER JOIN att_instructors ";
         $SQL.=" ON att_tracks.track_instructor_id=att_instructors.instructor_id";
+        $SQL.=" $condition";
         $Handler=Database::Connection();
         $Stmt=$Handler->prepare($SQL);
         $Stmt->execute();
         $RESULT['tracks']=$Stmt->fetchAll(\PDO::FETCH_OBJ);
-        $SQL="select day_name,track_name,att_tracks.track_id FROM att_week_days ";
+        $SQL="select day_name,track_name,att_week_days.day_id,att_tracks.track_id FROM att_week_days ";
         $SQL.="INNER JOIN att_track_days ON att_week_days.day_id=att_track_days.day_id INNER JOIN att_tracks ON att_tracks.track_id=att_track_days.track_id";
+        $SQL.=" $condition";
         $Stmt=$Handler->prepare($SQL);
         $Stmt->execute();
         $RESULT['tracks_days']=$Stmt->fetchAll(\PDO::FETCH_OBJ);

@@ -104,3 +104,26 @@
         }*/
 
         select track_id,track_name,place_name,instructor_name from att_tracks inner join att_places ON att_tracks.track_place_id=att_places.place_id inner join att_instructors on att_tracks.track_instructor_id=att_instructors.instructor_id
+
+
+        /* UNDER DEVELOPMENT
+            public static function Merge($table,$schema,$data){
+                $Handler=Database::Connection();
+                $SQL="INSERT INTO ".$table." SET ";
+                foreach($schema as $columName =>$type){
+                    $SQL.=$columName."=:".$columName.",";
+                }
+                $SQL=trim($SQL,',');
+                $PARAMS=array();
+                foreach($data as $columName =>$value){
+                    $x=":$columName";
+
+                }
+            }
+            */
+
+
+            /*
+            form of add student original
+
+            */

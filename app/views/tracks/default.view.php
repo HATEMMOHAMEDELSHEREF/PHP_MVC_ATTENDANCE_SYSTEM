@@ -6,8 +6,18 @@ extract($tracks);
 <div class="container">
     <div class="row">
         <div class="col-xs-12">
+            <?php
+            if (isset($_SESSION['tracks'])){
+                echo '<div class="alert alert-'.$_SESSION['tracks']['Type'].' '.$_SESSION['tracks']['Type'].'-operation" style="visibility: hidden" id="MESSAGE">
+                '.$_SESSION['tracks']['Msg'].'
+                </div>';
+                unset($_SESSION['tracks']);
+            }
+            ?>
             <div class="track-panel">
                 <h3>Tracks <span class="badge-primary"><?=count($tracks);?></span></h3>
+                <a class="btn btn-primary pull-right" href="/tracks/add" style="margin-bottom: 10px"><i class="fa fa-plus"></i> Add New</a>
+
             </div>
         </div>
         <div class="col-xs-12 trackss">
@@ -43,10 +53,11 @@ extract($tracks);
                             ?>
                             <td><?=trim($output,"@");?></td>
                             <td>
-                                <a href="#"><i class="fa fa-edit"></i></a>
-                                <a href="#"><i class="fa fa-trash"></i></a>
+                                <a href="/tracks/edit/<?=$track->track_id;?>"><i class="fa fa-edit"></i></a>
+                                <a href="/tracks/delete/<?=$track->track_id;?>" onclick="return (confirm('Do You Sure To Remove This Track'))?true:false"><i class="fa fa-trash"></i></a>
                             </td>
                         </tr>
+
                     <?php
                     endforeach;
                     ?>

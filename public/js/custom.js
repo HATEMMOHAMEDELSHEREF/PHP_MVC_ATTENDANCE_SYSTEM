@@ -14,41 +14,9 @@
 * turn on datatable plugin
 * */
 
-$(document).ready(function () {
-   $('#scan-absense-btn').click(function () {
-       DWTQR('preview');
-       dwStartScan();
-test();
-       return false;
-   });
-});
-function test() {
-    $.sweetModal({
-        content: 'NO.',
-        title: 'Not Found Here',
-        icon: $.sweetModal.ICON_ERROR,
-        theme: $.sweetModal.THEME_DARK,
-        buttons: {
-            'That\'s fine': {
-                classes: 'redB'
-            }
-        }
-
-    });
-}
 
 
-// $.sweetModal({
-//     content: 'OK.',
-//     title: 'Attended Successfully',
-//     icon: $.sweetModal.ICON_SUCCESS,
-//     theme: $.sweetModal.THEME_LIGHT,
-//     buttons: {
-//         'That\'s fine': {
-//             classes: 'redB'
-//         }
-//     }
-// });
+
 $(document).ready(function() {
     $('#edit-session-btn').click(function () {
         console.log('edit clicked');
@@ -149,6 +117,24 @@ $(function () {
     });
 
 
+// $(document).ready(function () {
+//     var qr = new QRious({
+//         element: document.getElementById('qr'),
+//         value: 'hatemmohamedelsheref@10155',
+//         background: 'white', // background color
+//         foreground: '#1a588a', // foreground color
+//         backgroundAlpha: 1,
+//         foregroundAlpha: 1,
+//         level: 'L', // Error correction level of the QR code (L, M, Q, H)
+//         mime: 'image/png', // MIME type used to render the image for the QR code
+//         size: 100, // Size of the QR code in pixels.
+//         padding: 10 // padding in pixels
+//     });
+//     var canvas = document.getElementById("qr");
+//     image = canvas.toDataURL("image/png", 1.0).replace("image/png", "image/octet-stream");
+//     alert(image);
+//
+// });
 $(document).ready(function () {
     $('#MESSAGE').css('visibility','visible');
     $('#MESSAGE').fadeIn(function () {
@@ -161,3 +147,44 @@ $(document).ready(function () {
 
     },5000);
 });
+
+
+/* Start Qr Scanner*/
+// $(document).ready(function () {
+//     $('#scan-student-info-btn').click(function (e) {
+//         e.preventDefault();
+//         DWTQR('preview');
+//         dwStartScan();
+//         alert('clicked');
+//     });
+// });
+function test() {
+    $.sweetModal({
+        content: 'NO.',
+        title: 'Not Found Here',
+        icon: $.sweetModal.ICON_ERROR,
+        theme: $.sweetModal.THEME_DARK,
+        buttons: {
+            'That\'s fine': {
+                classes: 'redB'
+            }
+        }
+
+    });
+}
+
+function good() {
+    $.sweetModal({
+        content: 'OK.',
+        title: 'Attended Successfully',
+        icon: $.sweetModal.ICON_SUCCESS,
+        theme: $.sweetModal.THEME_LIGHT,
+        buttons: {
+            'That\'s fine': {
+                classes: 'redB'
+            }
+        }
+    });
+}
+
+/* End Qr Scanner*/

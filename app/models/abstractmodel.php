@@ -53,7 +53,6 @@ class AbstractModel
             }else{
                 $is_exist=$this->CheckRecordExist(1);
             }
-            echo $is_exist.'ssssssssss';
             if ($is_exist===true){
                 return array(
                     'Msg'        =>'Record Already Exist',
