@@ -4,6 +4,7 @@
 namespace App\Controllers;
 
 
+use App\Lib\Services;
 use App\Models\InstructorModel;
 use App\Lib\Helper;
 use App\Lib\Uploader;
@@ -143,6 +144,11 @@ class InstructorController extends AbstractController
                                         unset($_SESSION['new_uploaded_image']);
                                     }
                                 }
+                                // edit session
+                                if ($MODEL->instructor_id==$_SESSION['user_auth']['Data']->instructor_id){
+                                   unset($_SESSION['user_auth']);
+                                    Helper::Redirect('/authentication/login');
+                                }
                             } else {
                                if (isset($_SESSION['new_uploaded_image'])){
                                    if (file_exists($_SESSION['new_uploaded_image'])){
@@ -213,5 +219,9 @@ class InstructorController extends AbstractController
         }else{
             Helper::Redirect('/instructor/default');
         }
+    }
+
+    public function accountAction(){
+        $this->view();
     }
     }

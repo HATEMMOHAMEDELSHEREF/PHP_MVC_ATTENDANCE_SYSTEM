@@ -5,6 +5,10 @@
         <div class="col-xs-6">
             <form class="form-data" autocomplete="off" novalidate>
                 <div class="form-group">
+                    <button class="btn btn-danger form-control scan-absense-btn sm-btn-close"  id="close-student-info-btn"><i class="fa fa-power-off"></i></button>
+
+                </div>
+                <div class="form-group">
                     <label for="student_id">Student ID</label>
                     <input type="text" class="form-control"  value="" id="student_id" disabled>
                 </div>
@@ -25,8 +29,12 @@
                     <input type="text" class="form-control" id="student_reg_date"  value="" disabled>
                 </div>
                 <div class="form-group">
-                    <button class="btn btn-success form-control scan-absense-btn sm-btn" id="scan-student-info-btn"> SCAN </button>
-                    <button class="btn btn-danger form-control scan-absense-btn sm-btn" id="stop-student-info-btn" disabled> Reload </button>
+                    <button class="btn btn-info form-control scan-absense-btn sm-btn"    id="scan-student-info-btn"><i class="fa fa-search"></i></button>
+                    <button class="btn btn-primary form-control scan-absense-btn sm-btn" id="refresh-student-info-btn" disabled><i class="fa fa-refresh"></i></button>
+                    <a  class="btn btn-success form-control scan-absense-btn sm-btn disabled" id="edit-student-info-btn" ><i class="fa fa-edit"></i></a>
+                    <a class="btn btn-danger form-control scan-absense-btn sm-btn disabled"
+                       id="remove-student-info-btn" onclick="return (confirm('Do You Sure To Remove This Student'))?true:false"
+                    ><i class="fa fa-trash"></i></a>
                 </div>
             </form>
         </div>
@@ -38,15 +46,16 @@
                 <script src="/js/jsQR.js"></script>
                 <script src="/js/dw-qrscan.js"></script>
                 <script>
-                    $('#stop-student-info-btn').click(function (e) {
-                        window.location.reload();
-
+                    $('#refresh-student-info-btn').click(function (e) {
+                       // window.location.reload();
+                        dwStartScan();
+                        return false;
                     });
                     DWTQR('preview');
                     $('#scan-student-info-btn').click(function (e) {
                         dwStartScan();
                         e.preventDefault();
-                        $('#stop-student-info-btn').attr('disabled',false);
+                        $('#refresh-student-info-btn').attr('disabled',false);
                         $(this).attr('disabled',true);
                     });
                     function dwQRReader(qrdata){
@@ -55,17 +64,28 @@
                             method: 'post',
                             data: {data: qrdata},
                             success: function (data) {
-                                console.log(JSON.parse(data));
+
                                 if ((JSON.parse(data)).Status==true){
-                                    good();
                                     var Student=JSON.parse(data).Data[0];
+                                    $('#edit-student-info-btn').removeClass('disabled');
+                                    $('#remove-student-info-btn').removeClass('disabled');
+                                    $('#edit-student-info-btn').attr('href','/student/edit/'+Student.student_id);
+                                    $('#remove-student-info-btn').attr('href','/student/delete/'+Student.student_id);
                                     $('#student_id').val(Student.student_id);
                                     $('#student_name').val(Student.student_name);
                                     $('#student_email').val(Student.student_email);
                                     $('#student_phone').val(Student.student_phone);
                                     $('#student_reg_date').val(Student.student_register_date);
+                                    FoundStudent();
                                 }else{
-                                    test();
+                                    $('#edit-student-info-btn').addClass('disabled');
+                                    $('#remove-student-info-btn').addClass('disabled');
+                                    $('#student_id').val('NOT FOUND USER');
+                                    $('#student_name').val('NOT FOUND USER');
+                                    $('#student_email').val('NOT FOUND USER');
+                                    $('#student_phone').val('NOT FOUND USER');
+                                    $('#student_reg_date').val('NOT FOUND USER');
+                                    NotFoundStudent();
                                 }
 
                             }

@@ -287,10 +287,11 @@ body {
 }
 .jquery-accordion-menu .jquery-accordion-menu-footer,
 .jquery-accordion-menu .jquery-accordion-menu-header{
-    background: #1a588a;
+    /*background: #1a588a;*/
+    background: #f44336;
 }
 .jquery-accordion-menu ul li a {
-    background: #1a588a;
+    background: #f44336;
     border: none;
     font-weight: bold;
     font-size: 15px;
@@ -298,12 +299,15 @@ body {
 .jquery-accordion-menu ul ul.submenu li a{
     font-size: 12px;
 }
+.bg-main{
+    background-color:#f44336 !important;
+}
 .bg-owner{
-    background: #1a588a;
+    background: #f44336;
 }
 .jquery-accordion-menu>ul>li.active>a,
 .jquery-accordion-menu>ul>li:hover>a{
-    background: #1d478a;
+    background: #f40d1d;
 }
 .toggle-link{
     color: #FFF;
@@ -593,5 +597,91 @@ margin-bottom: 10px;
     width: 75px;
     float: left;
     display: block;
-    margin-right: 20px;
+    margin-right: 12px;
 }
+.sm-btn:last-child{
+    margin-right: 0px;
+    margin-left: 12px;
+}
+.sm-btn-close{
+    width: 75px;
+    display: block;
+    margin-top: -15px;
+}
+#version{
+    font-size: 1rem;
+    /*color: #f44336;*/
+
+
+}
+a:not([href]):not([tabindex]){
+    color: #fff;
+}
+.disabled{
+    pointer-events: none;
+}
+#logo-color{
+    color: #f44336;
+    color: #FFFFFF;
+}
+.mr-top{
+    margin-top: 30px;
+}
+.font-cap-bold{
+    font-weight: bold;
+    text-transform: capitalize;
+}
+#scan-controller-canvas{
+    margin-top: 50px;
+    width: 700px;
+    margin-left: 200px;
+
+}
+#scan-controlleres{
+margin-left: 400px;
+margin-bottom: 10px;
+
+}
+
+input.hidden {
+    position: absolute;
+    left: -9999px;
+}
+
+#profile-image1 {
+    cursor: pointer;
+
+    width: 100px;
+    height: 100px;
+    border:2px solid #03b1ce ;}
+.tital{ font-size:16px; font-weight:500;}
+.bot-border{ border-bottom:1px #f8f8f8 solid;  margin:5px 0  5px 0}
+
+
+.dash-title{
+    font-family: sans-serif;
+    text-transform: uppercase;
+    font-weight: bold;
+    margin: 20px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

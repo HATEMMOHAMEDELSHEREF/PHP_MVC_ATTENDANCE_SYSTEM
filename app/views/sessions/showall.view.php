@@ -1,8 +1,104 @@
+
+
+<script src="/js/jquery.min.js"></script>
+<script>
+    function loadSessions(){
+        var id="";
+        var sessions;
+        $.ajax({
+            url:'https://www.mufix.com/sessions/getSessions',
+            method:'POST',
+            data:{'id':id},
+            // dataType:'json',
+            success:function (data){
+                // console.log(data);
+                sessions=JSON.parse(data);
+                var num=0;
+                var output="";
+                $.each(sessions.Data,function (key,value) {
+                    num++;
+                    output+="<tr><td>"+value.session_id+"</td>";
+                    output+="<td>"+value.session_name+"</td>";
+                    output+="<td>"+value.instructor_name+"</td>";
+                    output+="<td>"+value.session_date.substr(0,10)+"</td>";
+                    output+="<td>"+value.track_name+"</td>";
+                    output+="<td>"+value.place_name+"</td>";
+                    switch (value.session_status) {
+                        case 'pending':
+                            output+="<td class='text-primary font-cap-bold'>"+value.session_status+"</td>";
+                            output+="<td><a href='/sessions/edit/"+value.session_id+"' id='edit-session-btn'><i class='fa fa-edit'></i></a>";
+                            output+="<a href='/sessions/delete/"+value.session_id+"' onclick='return (confirm(\"Do You Sure To Remove This Session\"))?true:false'><i class='fa fa-trash'></i></a></td>";
+                            output+="<td><button class='btn btn-primary' onclick='start("+value.session_id+','+value.track_id+");'>Start</button></td>";
+
+                            break;
+                        case 'finished':
+                            output+="<td class='text-danger font-cap-bold'>"+value.session_status+"</td>";
+                            output+="<td><a href='/sessions/edit/"+value.session_id+"' id='edit-session-btn'><i class='fa fa-edit'></i></a>";
+                            output+="<a href='/sessions/delete/"+value.session_id+"' onclick='return (confirm(\"Do You Sure To Remove This Session\"))?true:false'><i class='fa fa-trash'></i></a></td>";
+                            output+="<td><button class='btn btn-danger' disabled>Finished</button></td>";
+
+                            break;
+                        case 'running':
+                            output+="<td class='text-success font-cap-bold'>"+value.session_status+"</td>";
+                            output+="<td><a href='/sessions/edit/"+value.session_id+"' id='edit-session-btn'><i class='fa fa-edit'></i></a> ";
+                            output+="<a href='/sessions/delete/"+value.session_id+"' onclick='return (confirm(\"Do You Sure To Remove This Session\"))?true:false'><i class='fa fa-trash'></i></a> ";
+                            output+="<a href='/absense/startabsense/'><i class='fa fa-toggle-on'></i></a> ";
+                            output+="<a href='#'><i class='fa fa-power-off' id='endsession' data-value='"+value.session_id+"'></i></a></td>";
+                            output+="<td><button class='btn btn-success' disabled>Runnin</button></td>";
+                            break;
+                        default:
+                            output+="<td class='text-danger font-cap-bold'>"+value.session_status+"</td>";
+                            output+="<td><a href='/sessions/edit/"+value.session_id+"' id='edit-session-btn'><i class='fa fa-edit'></i></a>";
+                            output+="<a href='/sessions/delete/"+value.session_id+"' onclick='return (confirm(\"Do You Sure To Remove This Session\"))?true:false'><i class='fa fa-trash'></i></a></td>";
+                            output+="<td><button class='btn btn-danger' disabled>Finished</button></td>";
+                            break;
+                    }
+                });
+                $('#sessions').html(output);
+                $('#numofsessions').html(num);
+
+
+            }
+        });
+    }
+
+    function start(session_id,track_id) {
+        $.ajax({
+            url:'https://www.mufix.com/sessions/startsession',
+            method:'POST',
+            data:{'session_id':session_id,'track_id':track_id},
+            success:function (data) {
+                window.location.href="/absense/startabsense";
+            }
+        });
+
+        return false;
+    }
+    $(document).ready(function () {
+        $('#endsession').click(function (e) {
+            e.preventDefault();
+            var id=$('#endsession').data('value');
+            $.ajax({
+                url:'https://www.mufix.com/sessions/endsession',
+                method:'POST',
+                data:{'session_id':id},
+                success:function (data) {
+                    loadSessions();
+                }
+            });
+        });
+    });
+    loadSessions();
+</script>
+
+
+
+
 <div class="container">
     <div class="row">
         <div class="col-xs-12">
             <div class="track-panel">
-                <h3>Sessions <span class="badge-primary">20</span></h3>
+                <h3>All Sessions <span class="badge-primary" id="numofsessions"></span></h3>
             </div>
         </div>
 
@@ -20,48 +116,10 @@
                         <td>Place</td>
                         <td>Status</td>
                         <td>Controllers</td>
+                        <td>Absense State</td>
                     </tr>
                     </thead>
-                    <tbody>
-                    <tr>
-                        <td>2</td>
-                        <td>PHP Basics</td>
-                        <td>Ali Mahmoud</td>
-                        <td>1/8/2020</td>
-                        <td>BackEnd</td>
-                        <td>Hall 2</td>
-                        <td class="text-success">Running</td>
-                        <td>
-                            <a href="#" id="edit-session-btn"><i class="fa fa-edit"></i></a>
-                            <a href="#"><i class="fa fa-trash"></i></a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>2</td>
-                        <td>PHP Basics</td>
-                        <td>Ali Mahmoud</td>
-                        <td>1/8/2020</td>
-                        <td>BackEnd</td>
-                        <td>Hall 2</td>
-                        <td class="text-danger">Finished</td>
-                        <td>
-                            <a href="#" id="edit-session-btn"><i class="fa fa-edit"></i></a>
-                            <a href="#"><i class="fa fa-trash"></i></a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>2</td>
-                        <td>PHP Basics</td>
-                        <td>Ali Mahmoud</td>
-                        <td>1/8/2020</td>
-                        <td>BackEnd</td>
-                        <td>Hall 2</td>
-                        <td class="text-success">Running</td>
-                        <td>
-                            <a href="#" id="edit-session-btn"><i class="fa fa-edit"></i></a>
-                            <a href="#"><i class="fa fa-trash"></i></a>
-                        </td>
-                    </tr>
+                    <tbody id="sessions">
                     </tbody>
                 </table>
             </div>
@@ -71,27 +129,3 @@
     </div>
 </div>
 <!-- /#page-content-wrapper -->
-
-<div class="modal fade" id="modal-of-edit-session" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h4 class="modal-title" >Edit Session</h4>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-
-            </div>
-            <div class="modal-body">
-                <form autocomplete="off" novalidate>
-                    <div class="form-group">
-                        <label><span class="text-dark">Session Name</span></label>
-                        <input type="text" class="form-control"  placeholder="Session Name">
-                    </div>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                <a type="button" href="/sessions/edit/5" class="btn btn-success">Update</a>
-            </div>
-        </div>
-    </div>
-</div>

@@ -16,7 +16,8 @@ class AbstractController
        $this->view();
     }
     public function notfoundAction(){
-        echo 'Not found Controller/Action';
+
+        $this->view();
     }
 
     public function view(){

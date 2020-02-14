@@ -47,13 +47,7 @@ $(function () {
     });
 });
 
-$(function () {
-    $('#show-qr-btn').click(function () {
-        $('#recipient-name').val('hatem mohamed elsheref');
-        $('#modal-of-show-qr').modal('show');
 
-    });
-});
 
 $(function () {
     $('#edit-track-btn').click(function () {
@@ -158,14 +152,14 @@ $(document).ready(function () {
 //         alert('clicked');
 //     });
 // });
-function test() {
+function NotFoundStudent() {
     $.sweetModal({
         content: 'NO.',
-        title: 'Not Found Here',
+        title: 'Student Not Found Here',
         icon: $.sweetModal.ICON_ERROR,
         theme: $.sweetModal.THEME_DARK,
         buttons: {
-            'That\'s fine': {
+            'Cancel': {
                 classes: 'redB'
             }
         }
@@ -173,10 +167,11 @@ function test() {
     });
 }
 
-function good() {
+
+function FoundStudent() {
     $.sweetModal({
         content: 'OK.',
-        title: 'Attended Successfully',
+        title: 'Student Founded ',
         icon: $.sweetModal.ICON_SUCCESS,
         theme: $.sweetModal.THEME_LIGHT,
         buttons: {
@@ -187,4 +182,58 @@ function good() {
     });
 }
 
+
 /* End Qr Scanner*/
+
+/*
+* Default Action Student Controller
+* Show Qr Start
+* */
+$(function () {
+    $('.show-qr-btn').click(function (e) {
+        var path=$(this).data('value');
+        $('#qr-image').attr('src',"/"+path);
+        $('#modal-of-show-qr').modal('show');
+        e.preventDefault();
+    });
+
+});
+/*
+* End Show QR
+* */
+
+/*
+* Send Action Student Controller
+* Send Mail Start
+* */
+$(function () {
+    $('.send-mail').click(function (e) {
+        var result=confirm('Do You Sure To Send Mail')
+        if (result==true){
+            var data=$(this).data('value').split('#');
+            var email=data[0];
+            var name=data[1];
+            var qr=data[2];
+            $.ajax({
+                url:'https://mufix.com/student/sendmail',
+                method:"post",
+                data:{qr_path:qr,qr_email:email,qr_name:name},
+                success:function(data){
+                }
+            });
+        } else{
+          return false
+        }
+    });
+});
+/*
+* End Send Mail
+* */
+
+
+
+
+
+
+
+

@@ -3,6 +3,7 @@
 namespace App\Lib;
 use App\Lib\Helper;
 
+
 class Brain
 {
 
@@ -46,6 +47,28 @@ class Brain
             }else{
                 if (!in_array($this->_action,['login','reset','confirm','forget'])){
                     Helper::Redirect('/authentication/login');
+                }else{
+                    if (in_array($this->_action,['reset','confirm'])){
+                        if (isset($_SESSION['__CONFIRMATION__CODE__'])){
+                            if ($this->_action=="reset"){
+                                if (isset($_SESSION['__MY__CONFIRMED__CODE__'])){
+                                    if ($_SESSION['__MY__CONFIRMED__CODE__']==$_SESSION['__CONFIRMATION__CODE__']){
+
+                                    }else {
+                                        $_SESSION['confirm-msg']="Invalid Code";
+                                        Helper::Redirect('/authentication/confirm');
+                                    }
+                                }else{
+                                    $_SESSION['confirm-msg']="Enter Confirmation Code";
+                                    Helper::Redirect('/authentication/confirm');
+                                }
+                            }else{
+                               // i requested confirm
+                            }
+                        }else{
+                            Helper::Redirect('/authentication/login');
+                        }
+                    }
                 }
             }
 
@@ -77,11 +100,13 @@ class Brain
         $ACTIONNAME=$this->_action;
         if (!class_exists($CONTROLLERNAME)){
             $CONTROLLERNAME=self::NOTFOUNDCONTROLLER;
-            $this->_controller='NotFound';
+            $this->_controller='notfound';
             $this->_action='notfound';
             $ACTIONNAME=$this->_action;
         }else{
             if(!method_exists(new $CONTROLLERNAME,$ACTIONNAME.'Action')){
+                $CONTROLLERNAME=self::NOTFOUNDCONTROLLER;
+                $this->_controller='notfound';
                 $this->_action='notfound';
                 $ACTIONNAME=$this->_action;
             }else{
@@ -95,8 +120,7 @@ class Brain
         $object->setTemplate($this->_template);
 
         $ACTIONNAME=$ACTIONNAME.'Action';
-        ($object)->$ACTIONNAME();
-
+       ($object)->$ACTIONNAME();
     }
 
 }

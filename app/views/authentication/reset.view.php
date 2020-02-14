@@ -22,9 +22,13 @@
             <div class="account-wall">
                 <div id="my-tab-content" class="tab-content">
                     <div class="tab-pane active" id="login">
-                        <form class="form-signin" action="" method="">
-                            <input type="password" class="form-control" placeholder="Enter New Password" required autofocus>
-                            <input type="password" class="form-control" placeholder="Confirm Password" required >
+                        <form class="form-signin" action="/authentication/reset" method="post">
+                            <?php
+                            if (isset($_SESSION['reset-msg'])){
+                                echo '<label class="col-form-label text-danger"> * '. $_SESSION['forget-msg'].'</label>';
+                            }
+                            ?>
+                            <input type="password" class="form-control" name="new_password" placeholder="Enter New Password" required autofocus>
                             <input type="submit" class="btn btn-lg btn-primary btn-block" value="Send" />
                         </form>
 

@@ -22,8 +22,13 @@
             <div class="account-wall">
                 <div id="my-tab-content" class="tab-content">
                     <div class="tab-pane active" id="login">
-                        <form class="form-signin" action="confirmcode.php" method="">
-                            <input type="text" class="form-control" placeholder="Emaill Address ..."  autofocus>
+                        <form class="form-signin" method="post" action="/authentication/forget">
+                            <?php
+                            if (isset($_SESSION['forget-msg'])){
+                                echo '<label class="col-form-label text-danger"> * '. $_SESSION['forget-msg'].'</label>';
+                            }
+                            ?>
+                            <input type="text" class="form-control" name="user_email" placeholder="Emaill Address ..."  autofocus>
                             <input type="submit" class="btn btn-lg btn-primary btn-block" value="Send" />
                         </form>
 

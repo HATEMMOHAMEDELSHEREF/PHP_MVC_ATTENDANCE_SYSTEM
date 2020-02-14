@@ -218,7 +218,7 @@ class TracksController extends AbstractController
     }
     public function showallAction(){
         $this->setAction('default');
-        $this->view();
+        $this->defaultAction();
     }
 
     public function editAction(){

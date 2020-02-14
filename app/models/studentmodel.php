@@ -43,10 +43,10 @@ class StudentModel extends AbstractModel
         echo '<script src="/js/QRious.js"></script>';
         echo '<script src="/js/jquery.min.js"></script>';
         echo "<script>
-        var id=".$data['Id']."
-        ;var email='".$data['Email']."'
-        ;var name='".$data['Name']."'
-        ;var qr = new QRious({
+        var id='".$data['Id']."';
+        var email='".$data['Email']."';
+        var name='".$data['Name']."';
+        var qr = new QRious({
         element: document.getElementById('qr'),
         value:'".$data['Data']."',
         background: 'white',
@@ -60,17 +60,25 @@ class StudentModel extends AbstractModel
         padding: 15});
         var canvas = document.getElementById('qr');
         var image = canvas.toDataURL(\"image/png\", 1.0).replace(\"image/png\", \"image/octet-stream\");
-        
+       var realpath='';
         $.ajax({
         url:'https://www.mufix.com/student/upload',
-        method:'post',
+        method:'POST',
         data:{path:image},
         success:function(data) {
-         var variableToSend = data;
-        $.post('https://www.mufix.com/student/editpath', {qr_path: variableToSend,qr_id:id,qr_email:email,qr_name:name});
+        realpath=data;
+        $.ajax({
+        url:'https://www.mufix.com/student/editpath',
+        method:'post',
+        data:{qr_path:realpath,qr_id:id,qr_email:email,qr_name:name},
+        success:function(data) {
+        
+            }
+             });
       
         }
-        });
+       });
+        
         </script>";
     }
 
@@ -82,30 +90,4 @@ class StudentModel extends AbstractModel
     }
 
 
-
-
-
-/*
-
-        public function getAll($condition="")
-        {
-            $Handler=Database::Connection();
-            $SQL="SELECT att_students.student_name,att_student_tracks.std_track_track_id,att_tracks.track_name FROM ";
-            $SQL.=" att_students INNER JOIN att_student_tracks ON att_students.student_id=att_student_tracks.std_track_student_id ";
-            $SQL.=" INNER JOIN att_tracks ON att_student_tracks.std_track_track_id =att_tracks.track_id ".$condition;
-
-
-        }
-        public function getByPk($PK)
-        {
-            $Handler=Database::Connection();
-            $SQL="SELECT att_students.student_name,att_student_tracks.std_track_track_id,att_tracks.track_name FROM ";
-            $SQL.=" att_students INNER JOIN att_student_tracks ON att_students.student_id=att_student_tracks.std_track_student_id ";
-            $SQL.=" INNER JOIN att_tracks ON att_student_tracks.std_track_track_id =att_tracks.track_id WHERE att_student.student_name".$PK;
-
-
-
-
-        }
-*/
 }

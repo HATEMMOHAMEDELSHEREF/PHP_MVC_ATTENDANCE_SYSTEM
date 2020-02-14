@@ -15,7 +15,7 @@ extract($this->Data);
             }
             ?>
             <div class="track-panel">
-                <h3>Edti Instructors </h3>
+                <h3>Edit Instructors </h3>
             </div>
         </div>
         <div class="col-xs-12 trackss">

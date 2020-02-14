@@ -22,8 +22,8 @@
             <div class="account-wall">
                 <div id="my-tab-content" class="tab-content">
                     <div class="tab-pane active" id="login">
-                        <form class="form-signin" action="reset.php" method="">
-                            <input type="text" class="form-control" placeholder="Enter Code Here" required autofocus>
+                        <form class="form-signin" action="/authentication/confirm" method="post">
+                            <input type="text" class="form-control" name="confirmed_code" placeholder="Enter Code Here" required autofocus>
                             <input type="submit" class="btn btn-lg btn-primary btn-block" value="Confirm" />
                         </form>
 

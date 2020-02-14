@@ -4,6 +4,8 @@
 namespace App\Models;
 
 
+use App\Lib\Database;
+
 class AuthenticationModel extends AbstractModel
 {
 
@@ -45,14 +47,20 @@ class AuthenticationModel extends AbstractModel
         }
 
     }
-    public function ForgetPassword(){
-        //FORGET PASSWORD OPERATION
-    }
-    public function ResetPassword(){
+
+    public function ResetPassword($newPass,$email){
         //RESET PASSWORD OPERATION
+
+        $SQL="UPDATE ".static::$TABLE_NAME." SET instructor_password='".$newPass."' WHERE instructor_email='".$email."'";
+        $Handler=Database::Connection();
+        $Stmt=$Handler->prepare($SQL);
+        $re=$Stmt->execute();
+        if ($re==true){
+            return true;
+        }else{
+            return false;
+        }
     }
-    public function ConfirmPassword(){
-        //CONFIRM PASSWORD OPERATION
-    }
+
 
 }

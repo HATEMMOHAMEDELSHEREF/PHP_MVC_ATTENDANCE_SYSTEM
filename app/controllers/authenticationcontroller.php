@@ -5,7 +5,9 @@ namespace App\Controllers;
 
 
 use App\Lib\Helper;
+use App\Lib\Mailer;
 use App\Models\AuthenticationModel;
+use http\Header;
 
 class AuthenticationController extends AbstractController
 {
@@ -42,13 +44,56 @@ class AuthenticationController extends AbstractController
         $this->view();
     }
     public function forgetAction(){
-        $this->view();
+        if ($_SERVER['REQUEST_METHOD']=="POST"){
+            if (isset($_POST['user_email']) and !empty($_POST['user_email'])){
+                $user_email=Helper::FilterEmail($_POST['user_email']);
+                $_SESSION['__TEMP__EMAIL__']=$user_email;
+                if ($user_email===false){
+                    $_SESSION['forget-msg']="Invalid Email Address";
+                    Helper::Redirect('/authentication/forget');
+                }else{
+                    $random_number = intval( "0" . rand(1,9) . rand(0,9) . rand(0,9) . rand(0,9) . rand(0,9) );
+                    $_SESSION['__CONFIRMATION__CODE__']=$random_number;
+                    Mailer::SendMail(false,$user_email,'Confirmation Code','</b>'.$random_number.'</b>');
+                    Helper::Redirect('/authentication/confirm');
+                }
+            }else{
+                $_SESSION['forget-msg']="Invalid Email Address";
+                Helper::Redirect('/authentication/forget');
+            }
+        }else{
+            $this->view();
+        }
     }
     public function confirmAction(){
-        $this->view();
+        if ($_SERVER['REQUEST_METHOD']=="POST"){
+            $_SESSION['__MY__CONFIRMED__CODE__']=$_POST['confirmed_code'];
+            Helper::Redirect("/authentication/reset");
+        }else{
+            $this->view();
+        }
     }
     public function resetAction(){
-        $this->view();
+        if ($_SERVER['REQUEST_METHOD']=="POST"){
+            if (isset($_POST['new_password']) and !empty($_POST['new_password'])){
+                $password=Helper::Filter_String($_POST['new_password']);
+                if ($password==null){
+                    $_SESSION['reset-msg']="Invalid Password";
+                    Helper::Redirect('/authentication/reset');
+                }else{
+                    $Auth=new AuthenticationModel();
+                    $result=$Auth->ResetPassword($password,$_SESSION['__TEMP__EMAIL__']);
+                    if ($result==true){
+                        Helper::Redirect('/authentication/login');
+                    }else{
+                        $_SESSION['reset-msg']="Invalid Operation";
+                        Helper::Redirect('/authentication/reset');
+                    }
+                }
+            }
+        }else{
+            $this->view();
+        }
     }
     public function logoutAction(){
         session_unset();

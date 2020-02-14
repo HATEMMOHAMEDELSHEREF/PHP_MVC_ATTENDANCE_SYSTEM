@@ -27,6 +27,25 @@ class Services
         }
     }
 
+    public static function Remove($tablename,$cond=""){
+        $Handler=Database::Connection();
+        $SQL="DELETE FROM ".$tablename." WHERE ".$cond;
+        $Stmt=$Handler->prepare($SQL);
+        $result=$Stmt->execute();
+        if ($result===true){
+            return array(
+                'Msg'        =>'Success Operation',
+                'Type'       =>'success',
+                'Status'     =>true
+            );
+        }else{
+            return array(
+                'Msg'        =>'Failed Operation',
+                'Type'       =>'danger',
+                'Status'     =>false
+            );
+        }
+    }
 
 
 }

@@ -43,7 +43,7 @@ trait Helper
 
     public static function Filter_Float($value){
        if(is_numeric($value)){
-           return filter_var($value,FILTER_VALIDATE_FLOAT,FILTER_FLAG_ALLOW_FRACTION);
+           return filter_var($value,FILTER_SANITIZE_NUMBER_FLOAT,FILTER_FLAG_ALLOW_FRACTION);
        }else{
            return false;
        }

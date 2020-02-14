@@ -6,10 +6,11 @@ namespace App\Lib;
 use App\Lib\Src\PHPMailer;
 use App\Lib\Src\Exception;
 use App\Lib\Src\SMTP;
+use http\Message\Body;
 
 class Mailer
 {
-    public static function SendMail($path,$email,$name){
+    public static function SendMail($path,$email,$name,$body=""){
 
         $mail = new PHPMailer(true);
 
@@ -25,11 +26,22 @@ class Mailer
             $mail->Port       = 587;                                                // TCP port to connect to
             $mail->setFrom('hackerhackerh7@gmail.com', 'MUFIX');
             $mail->addAddress($email, 'Hatem Mohamed');
-            $mail->addAttachment($path, 'YourQR.png');
+            if ($path===false){
+                //$mail->addAttachment($path, 'YourQR.png');
+            }else{
+                $mail->addAttachment($path, 'YourQR.png');
+            }
+
             $mail->isHTML(true);                                  // Set email format to HTML
             $mail->Subject = 'Hi '.$name;
-            $mail->Body    = 'This is Your <b>QR CODE!</b> Don\'t Forget To Get It With You';
-            $mail->AltBody = 'This is the body in plain text for non-HTML mail clients Hatem Elsheref';
+            if (!empty($body)){
+                $mail->Body    = 'THIS YOUR  <b>YOUR CONFIRMATION CODE!</b> To RESET YOUR ACCOUNT<br>'.$body;
+                $mail->AltBody = 'This is the body in plain text for non-HTML mail clients Hatem Elsheref';
+            }else{
+                $mail->Body    = 'This is Your <b>QR CODE!</b> Don\'t Forget To Get It With You';
+                $mail->AltBody = 'This is the body in plain text for non-HTML mail clients Hatem Elsheref';
+            }
+
 
             $mail->send();
             echo 'Message has been sent';
